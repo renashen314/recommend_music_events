@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Discover musical events</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <div>
+      <h1 class="p-8 text-2xl font-mono">
+        Explore more musical events that you may like!
+      </h1>
+      <div class="container max-auto"></div>
+      <form method="post">
+        <label for="artist" class="block font-lg p-8 leading-6 text-gray-900">
+          Enter your favorate artist:
+          <input
+            name="artist"
+            type="text"
+            class="rounded-md border-1 p-2 m-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+            placeholder="artist name"
+          />
+        </label>
+        <button
+          type="submit"
+          class="rounded-md bg-indigo-600 p-4 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          get recommendations
+        </button>
+      </form>
+      <div class="m-8">
+        {% if artist %}
+        <p>
+          Here are top 5 artists who have most similar sytles to {{ artist }}:
+        </p>
+        {% endif %} {% if top5 %} {% for a in top5 %}
+        <p>{{ a }}</p>
+        {% endfor %} {% endif %}
+      </div>
+      <form method="post">
+        {% if artist %}
+        <div class="m-4">Would you like to checkout artists' events?</div>
+        <div>
+          <input
+            type="submit"
+            name="action"
+            value="get_events"
+            class="rounded-md bg-emerald-600 p-4 text-sm font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+          />
+        </div>
+        {% endif %}
+      </form>
+      {% if events %} {% for event in events %}
+      <div>
+        <a href="{{ event[1] }}" class="hover:text-green-600 hover:underline">
+          {{ event[0] }}
+        </a>
+      </div>
+      {% endfor %} {% endif %}
+    </div>
+  </body>
+</html>
