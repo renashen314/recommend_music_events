@@ -42,7 +42,7 @@ The interaction with the program is done through a web page. Follow these steps:
 
 In the command line, run the following command:
 
-`$ flask --app app run`
+    `$ flask --app app run`
 
 ## Data Sources
 
@@ -59,7 +59,7 @@ In the command line, run the following command:
 
 - [Ticketmaster API Documentation](https://developer.ticketmaster.com/products-and-docs/apis/getting-started/)
 - **Response Format:** JSON
--     **Authorization:** OAuth 2.0
+- **Authorization:** OAuth 2.0
 - **Endpoints Used:**
   - `/discovery/v2/attractions`:Attraction Search: Find attractions (artists, sports, packages, plays, etc.).
   - `/discovery/v2/events`:Event Search: Find events by location, date, availability, etc.
