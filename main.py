@@ -6,6 +6,7 @@ import json
 import networkx as nx
 from tm_keys import TM_KEY
 import itertools
+import pickle
 
 # Oauth2 authentification
 load_dotenv()
@@ -15,9 +16,9 @@ client_secret = os.getenv("SPOTIPY_CLIENT_SECRET")
 SPOTIFY_URL = "https://api.spotify.com/v1/artists/"
 TM_URL = "https://app.ticketmaster.com/discovery/v2/"
 
-ARTIST_CACHE = 'aritst_cache.json'
-EVENT_CACHE = 'event_cache.json'
-GRAPH_FILE = 'track_graph.gpickle'
+ARTIST_CACHE = './aritst_cache.json'
+EVENT_CACHE = './event_cache.json'
+GRAPH_FILE = './artist_graph.pkl'
 
 def get_token():
   auth_string = client_id + ":" + client_secret
@@ -94,11 +95,25 @@ def get_event(keyword, key):
     return None
 
 # cache functions
-def cache_artists(result):
-  pass
+def cache_or_load_graph(graph, filepath):
+  try:
+    with open(filepath, 'rb') as cache_file:
+      g = pickle.load(cache_file)
+  except:
+    with open(filepath, 'wb') as cache_file:
+      pickle.dump(graph, cache_file)
 
-def load_cache(file_path):
-  pass
+def cache_or_load_artists(token, artist_name):
+  if os.path.exists(ARTIST_CACHE):
+    with open(ARTIST_CACHE, 'r') as f:
+      artists = json.load(f)
+  else:
+    artists = search_and_recommend_artists(token, artist_name)
+    with open(ARTIST_CACHE, 'w') as f:
+      json.dump(artists, f)
+  return artists
+
+cache_or_load_artists(token, "doja cat")
    
 # build graph based on data
 def build_graph(data):

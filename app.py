@@ -48,26 +48,6 @@ def index():
     
     return render_template('index.html')
 
-# def get_more_data(token):
-    # if not session.get("access_token"):
-    #     return redirect(url_for("login"))
-    # token = main.get_token()
-    # if token != session["access_token"]:
-    #     session["access_token"] = token
-
-    # if request.method == "POST":
-    #     action = request.form.get("action")
-    #     if session["top5"]:
-    #         if action == "generate_playlist":
-    #             artist_name = session.get("artist_name")
-    #             playlist = main.get_playlist_rec(token, artist_id)
-    #         elif action == "get_events":
-    #             # Perform action for the "Get events" button
-    #             top5 = session.get("top5")
-    #             events = main.get_event_list(top5, TM_KEY)
-    #             print("get event button clicked!")
-    #         return render_template('index.html', events=events)
-    # return render_template('index.html')
 
 @app.route('/callback')
 def callback():
