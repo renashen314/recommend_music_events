@@ -42,7 +42,7 @@ The interaction with the program is done through a web page. Follow these steps:
 
 In the command line, run the following command:
 
-    `$ flask --app app run`
+    $ flask --app app run
 
 ## Data Sources
 
