@@ -16,7 +16,7 @@ client_secret = os.getenv("SPOTIPY_CLIENT_SECRET")
 SPOTIFY_URL = "https://api.spotify.com/v1/artists/"
 TM_URL = "https://app.ticketmaster.com/discovery/v2/"
 
-ARTIST_CACHE = './aritst_cache.json'
+ARTIST_CACHE = './artist_cache.json'
 EVENT_CACHE = './event_cache.json'
 GRAPH_FILE = './artist_graph.pkl'
 
@@ -93,27 +93,6 @@ def get_event(keyword, key):
     return json_result['_embedded']['events']
   except:
     return None
-
-# cache functions
-def cache_or_load_graph(graph, filepath):
-  try:
-    with open(filepath, 'rb') as cache_file:
-      g = pickle.load(cache_file)
-  except:
-    with open(filepath, 'wb') as cache_file:
-      pickle.dump(graph, cache_file)
-
-def cache_or_load_artists(token, artist_name):
-  if os.path.exists(ARTIST_CACHE):
-    with open(ARTIST_CACHE, 'r') as f:
-      artists = json.load(f)
-  else:
-    artists = search_and_recommend_artists(token, artist_name)
-    with open(ARTIST_CACHE, 'w') as f:
-      json.dump(artists, f)
-  return artists
-
-cache_or_load_artists(token, "doja cat")
    
 # build graph based on data
 def build_graph(data):
@@ -163,4 +142,36 @@ def get_event_list(artist_list, key):
     else: 
       line = f"No event found for {a}"
       events.append((line, None))
+  return events
+
+# cache functions
+def cache_or_load_graph(filepath, graph=None):
+  try:
+    with open(filepath, 'rb') as cache_file:
+      g = pickle.load(cache_file)
+  except:
+    with open(filepath, 'wb') as cache_file:
+      pickle.dump(graph, cache_file)
+  return g
+
+def cache_or_load_artists(token, artist_name):
+  if os.path.exists(ARTIST_CACHE):
+    with open(ARTIST_CACHE, 'r') as f:
+      artists = json.load(f)
+  else:
+    artists = search_and_recommend_artists(token, artist_name)
+    with open(ARTIST_CACHE, 'w') as f:
+      json.dump(artists, f)
+  return artists
+
+def cache_or_load_events(key=TM_KEY):
+  if os.path.exists(EVENT_CACHE):
+    with open(EVENT_CACHE, 'r') as f:
+      events = json.load(f)
+  else:
+    g = cache_or_load_graph(GRAPH_FILE)
+    top5 = find_top_5_similar_artists(g)
+    events = get_event_list(top5, key)
+    with open(EVENT_CACHE, 'w') as f:
+      json.dump(events, f)
   return events

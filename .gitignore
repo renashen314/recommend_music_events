@@ -1,2 +1,5 @@
 tm_keys.py
 .env
+artist_cache.json
+event_cache.json
+artist_graph.pkl
