@@ -8,6 +8,10 @@ This project utilizes the Spotify and Ticketmaster APIs to recommend music event
 
 [Link to GitHub Repo](https://github.com/renashen314/recommend_music_events)
 
+## Demo
+
+Watch the demo [here](https://drive.google.com/file/d/1HkG9hyJAoCB_JFZ1tWIGBLs8GxgLW_ig/view?usp=sharing) (includes audio).
+
 ## Getting Started
 
 ### API Keys
@@ -74,9 +78,5 @@ The program uses a graph data structure to calculate the most related top 5 arti
 - Enter a favorite artist, click "Get Recommendation" to see the top 5 similar artists.
 - Optionally, click "Get Events" to see a list of events by each artist.
 - Events are presented as hyperlinks leading to the event details page.
-
-## Demo
-
-Watch the demo [here](https://drive.google.com/file/d/1HkG9hyJAoCB_JFZ1tWIGBLs8GxgLW_ig/view?usp=sharing) (includes audio).
 
 Feel free to explore the project, provide feedback, and contribute to its development!
